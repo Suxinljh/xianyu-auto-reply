@@ -1,0 +1,88 @@
+/* ==========================================================================
+/* 全局主题覆盖 - 主题色 #5B58FF | 禁止投影/渐变 | 圆角 12px                  */
+/* ==========================================================================
+
+/* 主题色/圆角等 CSS 变量已在 index.html 的 <head> 内联定义（规避 vite cssnano 混淆把 :root 变量块拆坏）。
+  此处只保留组件级选择器规则。 */
+
+/* ---------- 组件级去阴影 ---------- */
+.el-card,
+.el-dialog,
+.el-message-box,
+.el-tooltip__popper,
+.el-dropdown-menu,
+.el-popover,
+.el-message,
+.el-notification {
+  box-shadow: none;
+}
+
+/* 按钮、输入框去投影，但保留输入框描边（改用 border 实现，box-shadow 只做去投影） */
+.el-button {
+  box-shadow: none !important;
+}
+
+/* 输入类组件：去掉投影阴影，改用真实 border 保留描边 */
+.el-input__wrapper,
+.el-textarea__inner,
+.el-select__wrapper,
+.el-checkbox__inner {
+  box-shadow: none !important;
+}
+
+/* 输入框描边（正常 / hover / 聚焦） */
+.el-input__wrapper {
+  border: 1px solid var(--el-border-color);
+}
+.el-input__wrapper:hover {
+  border-color: var(--el-color-primary);
+}
+.el-input__wrapper.is-focus {
+  border-color: var(--el-color-primary);
+}
+.el-textarea__inner {
+  border: 1px solid var(--el-border-color);
+}
+.el-textarea__inner:focus {
+  border-color: var(--el-color-primary);
+}
+.el-select__wrapper {
+  border: 1px solid var(--el-border-color);
+}
+.el-select__wrapper.is-focused {
+  border-color: var(--el-color-primary);
+}
+
+/* ---------- 主体背景 ---------- */
+html, body, #app {
+  background: #f5f6fa;
+}
+
+/* ---------- 卡片 ---------- */
+.el-card {
+  border: 1px solid var(--el-border-color-light);
+  border-radius: 12px;
+}
+
+/* ---------- 表格 ----------
+   保持 Element 默认直角描边，避免外框圆角与内部格线冲突 */
+
+/* ---------- 按钮（强制 12px 圆角，覆盖 Element 默认 6px） ---------- */
+.el-button, .el-button--small, .el-button--default, .el-button--primary {
+  border-radius: 12px !important;
+}
+
+/* ---------- 输入框 ---------- */
+.el-input__wrapper, .el-textarea__inner, .el-select__wrapper {
+  border-radius: 12px;
+}
+
+/* ---------- 对话框 ---------- */
+.el-dialog {
+  border-radius: 12px;
+}
+
+/* 分页、标签等统一圆角 */
+.el-pagination {
+  --el-pagination-button-border-radius: 12px;
+}
