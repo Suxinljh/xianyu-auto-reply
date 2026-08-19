@@ -11,6 +11,34 @@
 
 ---
 
+## 项目来源与改动说明
+
+本仓库基于原项目 [zhinianboke/xianyu-auto-reply](https://github.com/zhinianboke/xianyu-auto-reply) 修改而来，并在其基础上进行了以下主要改动：
+
+**前端**
+
+- 新增了独立的 Vue 3 + TypeScript + Element Plus 前端工程（`frontend/`），实现前后端分离开发；构建产物 `dist/` 仍由后端 FastAPI 托管。
+- 用新前端覆盖了登录、仪表盘、账号管理、商品管理、订单管理、自动发货、卡券管理、关键词回复、通知渠道、AI 回复、系统设置、系统日志、用户管理、数据管理、风险日志、商品指定回复、消息通知配置、商品搜索、关于等页面。
+
+**安全加固**
+
+- 用户密码由无盐 SHA-256 改为带盐 PBKDF2-SHA256（自动兼容旧哈希并可升级）。
+- Cookie 与账号密码实施默认落库加密（Fernet），密钥支持环境变量或自动生成持久化（`.crypto_key`）。
+- 修复验证码远程控制、通知渠道、卡券、商品抓取、通知删除等多处缺失的对象级授权；为验证码远程控制接口（含 WebSocket）增加登录鉴权。
+- 系统设置接口隐藏敏感字段、仅管理员可修改。
+- 日志不再打印完整 Cookie / 密码 / Token / AI 消息，SQL 参数日志对敏感字段自动脱敏。
+- 移除 `*_ultra.py` 中的隐藏 `exec` 混淆代码，改为复用已审计的明文实现。
+- 匿名使用统计默认关闭，上报端点改为 HTTPS。
+- Docker 相关配置去掉弱默认值：管理员密码 / 密钥改为必填环境变量，默认关闭自动发货，非 root、降权限。
+
+**其他**
+
+- 修复了若干前后端数据处理与安全相关问题；新增 `CORS_ORIGINS`、`COOKIE_ENCRYPTION_KEY` 等配置项。
+
+> 原作者的实现为本项目提供了核心基础；本仓库对其中的前端与安全部分做了实质性重构，功能与行为可能与原项目不完全一致。
+
+---
+
 ## 快速开始
 
 ### Docker（推荐）
@@ -230,7 +258,7 @@ npm run build      # 生成 frontend/dist，由后端托管
 
 ## 下载 / 获取最新版本
 
-- 最新代码以 **GitHub 仓库为准**：<https://github.com/zhinianboke/xianyu-auto-reply>
+- 最新代码以 **GitHub 仓库为准**：<https://github.com/Suxinljh/xianyu-auto-reply>
 - 镜像 / 打包文件（如有）见仓库 Releases 页或部署向导。
 - 项目根目录另附 `最新镜像地址.txt` 及网盘转存提示，可参考仓库说明。
 
